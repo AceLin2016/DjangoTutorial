@@ -18,8 +18,14 @@ from django.urls import path
 
 from django.urls import include
 
+from django.conf import settings
+from django.views.generic.base import RedirectView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path("polls/", include('polls.urls') ),
+
+    # path('favicon.ico', RedirectView.as_view(url=settings.STATIC_URL + 'favicon.ico')),
+
 ]
