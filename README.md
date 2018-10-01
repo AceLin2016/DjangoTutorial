@@ -62,3 +62,17 @@ class QuestionModelTest(TestCase):
 
 
 
+现在， 修复这个 bug
+
+```python
+### filename: polls/models.py
+	def was_published_recently(self):
+		now = timezone.now()
+		return now - datetime.timedelta(days=1) <= self.pub_date <= now
+    
+```
+
+
+
+
+
