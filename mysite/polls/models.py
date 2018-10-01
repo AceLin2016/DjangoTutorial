@@ -35,8 +35,8 @@ class Choice(models.Model, AttrDisplay):
 	choice_text = models.CharField(max_length=200)
 	votes		= models.IntegerField(default=0) 
 
-	def __init__(self, arg=None):
-		self.arg = arg
+	# def __init__(self, arg=None):
+	# 	self.arg = arg
 		
 	def __str__(self):
 		return self.choice_text
