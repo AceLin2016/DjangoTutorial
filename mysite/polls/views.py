@@ -15,18 +15,59 @@ from django.http import HttpResponse
 from .models import Question
 from .models import Choice
 
+from django.http import Http404
+from django.shortcuts import get_object_or_404
+"""
 def index(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
     context = { 'latest_question_list': latest_question_list, }
 
     return render( request, 'polls/index.html', context)
 
-from django.http import Http404
-from django.shortcuts import get_object_or_404
 def detail(request, question_id):
 	question = get_object_or_404(Question, pk=question_id)
 	return render (request, 'polls/detail.html', {'question':question,} )
+"""
+from django.views import generic
 
+class IndexView(generic.ListView):
+	"""docstring for IndexView
+	generic.ListView: 显示一个对象列表
+	"""
+	template_name = 'polls/index.html'
+	context_object_name = 'latest_question_list'
+	"""
+	def __init__(self, arg):
+		super(IndexView, self).__init__()
+		self.arg = arg
+	"""
+	def get_queryset(self):
+		"""Return the last five published questions."""
+		return Question.objects.order_by('-pub_date')[:5]
+
+class DetailView(generic.DetailView):
+	"""docstring for DetailView
+	  generic.DetailView: 显示一个特定类型对象的详细信息页面
+	  DetailView 期望从 URL 中捕获名为 ‘pk’ 的主键值， 
+	所以我们为通用视图把 question_id 改成 pk
+	"""
+	model = Question
+	template_name = 'polls/detail.html'
+	"""
+	def __init__(self, arg):
+		super(DetailView, self).__init__()
+		self.arg = arg
+	"""
+
+class ResultsView(generic.DetailView):
+	"""docstring for ResutlsView"""
+	model = Question
+	template_name = 'polls/results.html'
+	"""
+	def __init__(self, arg):
+		super(DetailView, self).__init__()
+		self.arg = arg
+	"""
 
 from django.http import HttpResponseRedirect
 from django.urls import reverse
