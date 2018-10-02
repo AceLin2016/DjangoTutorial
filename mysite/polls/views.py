@@ -30,6 +30,7 @@ def detail(request, question_id):
 """
 from django.views import generic
 
+from django.utils import timezone
 class IndexView(generic.ListView):
 	"""docstring for IndexView
 	generic.ListView: 显示一个对象列表
@@ -42,8 +43,13 @@ class IndexView(generic.ListView):
 		self.arg = arg
 	"""
 	def get_queryset(self):
-		"""Return the last five published questions."""
-		return Question.objects.order_by('-pub_date')[:5]
+		"""Return the last five published questions.
+		not including those set to be published in the future
+		"""
+		# return Question.objects.order_by('-pub_date')[:5]
+		return Question.objects.filter(
+			pub_date__lte=timezone.now()).order_by('-pub_date')[:5]
+
 
 class DetailView(generic.DetailView):
 	"""docstring for DetailView
