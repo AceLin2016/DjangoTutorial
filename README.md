@@ -199,6 +199,39 @@ admin.site.register(Choice)
 
 ```
 
+这样就能在后台 admin 上添加 choice， 并且其会有一个 select 控件用于选择 Question，这就就将新添加的 choice 分配到了 该 Question 上。
+
+
+
+但是因为上述方法太“僵硬”， 所以删除“注册“代码， 换一种方式。
+
+这种方法就是在创建"Question" 投票对象的时候，直接添加好几个选项。
+
+```python
+### filename: polls/admin
+from .models import Question, Choice
+
+# admin.site.register(Choice)
+class ChoiceInline(admin.StackedInline):
+	model = Choice
+	extra = 3
+
+class QuestionAdmin(admin.ModelAdmin):
+	fieldsets = [
+		(None,               {'fields':['question_text']}),
+		("Date Information", {'fields':['pub_date'],
+							  'classes':['collapse'],
+							  }),
+	]
+	inlines = [ChoiceInline]
+
+
+admin.site.register(Question, QuestionAdmin)
+
+```
+
+这样就可以在 Question 的 添加/编译 后台页面 添加/编辑 其 Choice 了。
+
 
 
 
