@@ -27,6 +27,11 @@ class Question(models.Model, AttrDisplay):
 		now = timezone.now()
 		return now - datetime.timedelta(days=1) <= self.pub_date <= now
 
+	was_published_recently.admin_order_field = 'pub_date'
+	was_published_recently.boolean = True
+	was_published_recently.short_description = 'Published recently?'
+
+
 class Choice(models.Model, AttrDisplay):
 	"""choice 选择模型
 	包含了： 1. 选项描述； 2. 当前的票数

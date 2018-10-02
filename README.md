@@ -261,13 +261,41 @@ admin.site.register(Question, QuestionAdmin)
 
 ![自定义后台更改列表](res/backend-mange-of-polls-by-using-LIST_DISPLAY.png)
 
+同时， 点击 list 的”标签“可以决定通过 "Question Text" 还是 ”Date Published“ 等来排序。
 
 
 
+#### 后台列表过滤器
+
+在 polls/admin.py 使用 list_filter 优化 Question 变更页。
+
+```python
+#### filename: polls/admin.py 
+[...]
+class QuestionAdmin(admin.ModelAdmin):
+	[...]
+	list_display = ('question_text', 'pub_date', 'was_published_recently')
+	list_filter = ['pub_date']
+
+
+admin.site.register(Question, QuestionAdmin)
+```
+
+这样就会在 admin > Question 页面添加一个 FILTER 侧边栏，通过以 'pub_date' 的选择来过滤列表中显示的内容。
+
+>  因为 `pub_date` 是类 [`DateTimeField`](https://docs.djangoproject.com/zh-hans/2.1/ref/models/fields/#django.db.models.DateTimeField)，Django 知道要提供哪个过滤器：“任意时间”，“今天”，“过去7天”，“这个月”和“今年”。
 
 
 
+#### 后台列表搜索框
 
+`search_fields = ['question_text']` 将在列表的顶部增加一个搜索框。当输入待搜项时，Django 将搜索 `question_text` 字段。你可以使用任意多的字段——由于后台使用 `LIKE` 来查询数据，将待搜索的字段数限制为一个不会出问题大小，会便于数据库进行查询操作。
+
+
+
+#### 更多功能
+
+> 现在是给你的修改列表页增加分页功能的好时机。默认每页显示 100 项。[`变更页分页`](https://docs.djangoproject.com/zh-hans/2.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_per_page), [`搜索框`](https://docs.djangoproject.com/zh-hans/2.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.search_fields), [`过滤器`](https://docs.djangoproject.com/zh-hans/2.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_filter), [`日期层次结构`](https://docs.djangoproject.com/zh-hans/2.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.date_hierarchy), 和 [`列标题排序`](https://docs.djangoproject.com/zh-hans/2.1/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display) 均以你期望的方式合作运行。
 
 
 
