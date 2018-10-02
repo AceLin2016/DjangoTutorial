@@ -171,6 +171,31 @@ class QuestionIndexViewTest(TestCase):
 
 
 
+#### 测试 DetailView
+
+问题： 如果在浏览器的 地址栏， 输入”正确“的 `url/polls/<id>/` ID, 也可以看到在 future 发布的 Question
+
+在 DetailView 里增加一些约束：
+
+```python
+#### filename: polls/views.py
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
