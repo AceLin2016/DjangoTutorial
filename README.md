@@ -184,7 +184,20 @@ class QuestionIndexViewTest(TestCase):
 
 
 
+### 教程7 - 后台表单
 
+一个 Question 应该有多个 Choice (还记的 detail 页面的 radio 吗)。但是后台没有显示多个选项。
+
+有两种方法可以解决这个问题， 一是仿照向后台注册 Question 一样注册 Choice。
+
+```python
+### filename: polls/admin.py
+[...]
+from .models import Choice
+
+admin.site.register(Choice)
+
+```
 
 
 
