@@ -16,7 +16,7 @@ N/A
 
 ## ToDo
 
-- [ ] 教程5 - django 的 “模块” 测试
+- [x] 教程5 - django 的 “模块” 测试
 
 ## Note
 
@@ -231,6 +231,37 @@ admin.site.register(Question, QuestionAdmin)
 ```
 
 这样就可以在 Question 的 添加/编译 后台页面 添加/编辑 其 Choice 了。
+
+- [ ] `classes:['collapse']` 并没有体现出 Choice 相关的东西， 是哪一个点需要理解清楚？
+
+
+
+#### 自定义后台更改列表
+
+当前后台管理页面的 Question looks like:
+
+![修改前的后台管理 Question 显示效果](res/backend-mange-of-polls-original.png)
+
+默认情况下， Django 显示每个对象的 str() 返回的值。 但是还有一些信息也能一起显示出来就更好了， 比如 published date， was recently published? 
+
+
+
+为此， 使用 list_display 后台选项， 
+
+```python
+### filename: polls/admin.py
+[...]
+	list_display = ('question_text', 'pub_date', 'was_published_recently')
+
+```
+
+
+
+修改后显示像这样：
+
+![自定义后台更改列表](res/backend-mange-of-polls-by-using-LIST_DISPLAY.png)
+
+
 
 
 
